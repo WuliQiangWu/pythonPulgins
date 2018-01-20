@@ -1,71 +1,7 @@
-本模块帮助在Django应用中集成百度Ueditor HTML编辑器,Django是Python世界最有影响力的web框架。
-Ueditor HTML编辑器是百度开源的在线HTML编辑器,功能非常强大，像表格可以直接拖动调整单元格大小等。
-
-本仓库是fork自：https://github.com/zhangfisher/DjangoUeditor
-主要是因为发现原来的代码是基于python 2的语法，而我自己已经在用python 3.5了，有几个不兼容，所以想修改成python 3的语法
-给用python 3的朋友们抛砖引玉一下
-
-
-============
-###[2015-10-05]     Version: 1.9.144
-
-###* 语法的不同点，我自己试了一下，主要是下面两方面需要改动
-
-##1. import
-从同个文件夹下import，原代码是这样写的：import settings as USettings
-但是在python 3中，应该写成：from . import settings as USettings
-即from module import xxx
-参考：[python 3文档](https://docs.python.org/3/tutorial/modules.html#intra-package-references)
-
-##2. Exception
-原代码这样写：
-
-```python
-    try:
-        ...
-    except Exception, E:
-        print(E.message)
-```
-
-但在python 3中应该用as：
-
-```python
-    try:
-        ...
-    except Exception as E:
-        print(E.message)
-```
-
-参考：[python3文档](https://docs.python.org/3/tutorial/errors.html#handling-exceptions)
-
-##3. dict已经没有has_key属性了
-原代码这样写：
-
-```python
-if self._upload_settings.has_key("filePathFormat"):
-    uSettings['filePathFormat'] = calc_path(self._upload_settings['filePathFormat'], model_inst)
-```
-
-但在python 3中dict没有了has_key属性，所以应该换成get方法来判断：
-
-```python
-if self._upload_settings.get("filePathFormat", None):
-    uSettings['filePathFormat'] = calc_path(self._upload_settings['filePathFormat'], model_inst)
-```
-
-
-
----------------------------------------
-
+## 下载自 慕课网 vue+django 生鲜课程
 
 使用方法
 ============
-##1、安装方法
-
-    * 将github整个源码包下载下来
-        git clone https://github.com/cooljacket/DjangoUeditor
-    * 然后，假设你的python安装目录是PYTHON_ROOT（我的是D:\soft\py3.5），直接复制DjangoUeditor文件夹到PYTHON_ROOT\Lib\site-packages\下就好了，比如我的就是D:\soft\py3.5\Lib\site-packages\
-    * 之所以不使用原来的setup.py来安装，是因为我发现，用它的setup脚本会改动代码成原来的样子，也没去深究为什么，最后发现只需要直接复制过去就好了，而且卸载也很方便，直接删除就好了，没有什么依赖项和设置！
         
 ##2、在Django中安装DjangoUeditor
      在INSTALL_APPS里面增加DjangoUeditor app，如下：
@@ -84,8 +20,7 @@ if self._upload_settings.get("filePathFormat", None):
 from DjangoUeditor.models import UEditorField
     class Blog(models.Model):
         Name=models.CharField(,max_length=100,blank=True)
-        Content=UEditorField(u'内容   ',width=600, height=300, toolbars="full", imagePath="", filePath="", upload_settings={"imageMaxSize":1204000},
-                 settings={},command=None,event_handler=myEventHander(),blank=True)
+        Content=UEditorField(verbose_name = '',width=600, height=300,  imagePath="", filePath="",blank=True)
 ```
 
 *说明*
